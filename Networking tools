@@ -1,7 +1,7 @@
 @echo off
 :start
 chcp 65001
-title [ip pingerV.02]
+title [Networking toolsV.03]
 mode 60,20
 color E
 echo  ██████ ██    ██  ██████ ██   ██ ███████ ██████
