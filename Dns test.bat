@@ -75,17 +75,3 @@ Pause
  echo. && echo. && echo.
  Pause
  goto :start
-ECHO * Tenta 99.192.182.101:			%ms%
-ECHO ===============================================
-color 0q
-ECHO.
-ECHO ** Test Done! **
-ECHO.
-ECHO.
-  
-ECHO.&PAUSE&GOTO:EOF
- 
-:IP
-SET ms=# RTO #
-FOR /F "tokens=4 delims==" %%i IN ('ping.exe -n 1 %1 ^| FIND "ms"') DO SET ms=%%i
-GOTO:EOF
