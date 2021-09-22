@@ -1,21 +1,15 @@
 @echo off
 :start
 chcp 65001
-title [Networking toolsV.03]
+title [Networking tools V.03]
 mode 60,20
 color E
-echo  ██████ ██    ██  ██████ ██   ██ ███████ ██████
-echo ██       ██  ██  ██   ██  ██ ██  ██      ██   ██
-echo ██        ████   ██████  ███████ █████   ██████ 
-echo ██         ██    ███      ██ ██  ██      █████▄
-echo  ██████    ██    ██      ██   ██ ███████ ██   ██
 ECHO ===============================================
 ECHO Networking tools
 ECHO BY: Cyphrx
-ECHO All who believe will achieve.
 ECHO ===============================================
 SET choice=
-SET /p choice=D for dns resolver, I for Ippinger and T for internettest? [d/i/t]: 
+SET /p choice=D for dns resolver, I for Ippinger.T for internettest and S for system information? [d/i/t/s]: 
 IF NOT '%choice%'=='' SET choice=%choice:~0,1%
 IF '%choice%'=='t' GOTO :Internettest
 IF '%choice%'=='T' GOTO :Internettest
@@ -24,6 +18,8 @@ IF '%choice%'=='I' GOTO :Sketch
 IF '%choice%'==''  GOTO :Sketch
 IF '%choice%'=='d' GOTO :dnsresolver
 IF '%choice%'=='D' GOTO :dnsresolver
+IF '%choice%'=='s' GOTO :System
+IF '%choice%'=='S' GOTO :System
 ECHO "%choice%" is not valid
 ECHO.
 GOTO start
@@ -99,15 +95,9 @@ color E
 cls
 title [InternetTestV.01]
 color E
-echo  ██████ ██    ██  ██████ ██   ██ ███████ ██████
-echo ██       ██  ██  ██   ██  ██ ██  ██      ██   ██
-echo ██        ████   ██████  ███████ █████   ██████ 
-echo ██         ██    ███      ██ ██  ██      █████▄
-echo  ██████    ██    ██      ██   ██ ███████ ██   ██
 ECHO ===============================================
 ECHO internet tester
 ECHO BY: Cyphrx
-ECHO Your dreams are the only thing that matters.
 ECHO ===============================================
 color 01
 CALL:IP 8.8.8.8
@@ -175,12 +165,6 @@ ECHO * OpenNIC 192.95.54.3:			%ms%
 CALL:IP 192.95.54.1
 ECHO * OpenNIC 192.95.54.1:			%ms%
 ECHO ===============================================
-color 01
-CALL:IP 81.218.119.11
-ECHO * GreenTeamDNS 81.218.119.11:		%ms%
-CALL:IP 209.88.198.133	
-ECHO * GreenTeamDNS 209.88.198.133:		%ms%
-ECHO ===============================================
 color 02
 CALL:IP 185.228.168.9
 ECHO * CleanBrowsing 185.228.168.9:		%ms%
@@ -228,44 +212,6 @@ CALL:IP 45.33.97.5
 ECHO * FreeDNS 45.33.97.5:			%ms%
 CALL:IP 37.235.1.177
 ECHO * FreeDNS 37.235.1.177:			%ms%
-ECHO ===============================================
-color 01
-CALL:IP 77.88.8.8
-ECHO * Yandex.DNS 77.88.8.8:			%ms%
-CALL:IP 77.88.8.1
-ECHO * Yandex.DNS 77.88.8.1:			%ms%
-ECHO ===============================================
-color 02
-CALL:IP 91.239.100.100
-ECHO * UncensoredDNS 91.239.100.100:		%ms%
-CALL:IP 89.233.43.71
-ECHO * UncensoredDNS 89.233.43.71:		%ms%
-ECHO ===============================================
-color 03
-CALL:IP 74.82.42.42
-ECHO * Hurricane Electric 74.82.42.42:	%ms%
-ECHO ===============================================
-color 04
-CALL:IP 109.69.8.51
-ECHO * puntCAT 109.69.8.51:			%ms%
-ECHO ===============================================
-color 05
-CALL:IP 156.154.70.1
-ECHO * Neustar 156.154.70.1:			%ms%
-CALL:IP 156.154.71.1	
-ECHO * Neustar 156.154.71.1:			%ms%
-ECHO ===============================================
-color 06
-CALL:IP 45.33.97.5
-ECHO * Fourth Estate 45.77.165.194:		%ms%
-ECHO ===============================================
-color 07
-CALL:IP 37.235.1.177
-ECHO * Tenta 37.235.1.177:			%ms%
-CALL:IP 99.192.182.101
-ECHO * Tenta 99.192.182.101:			%ms%
-ECHO ===============================================
-color 08
 ECHO.
 ECHO ** Test Done! **
 ECHO.
@@ -284,54 +230,74 @@ GOTO:EOF
  echo.
  set /p domainname=Enter Domain Name :
  cls
- echo.
- echo  ██████ ██    ██  ██████ ██   ██ ███████ ██████
-echo ██       ██  ██  ██   ██  ██ ██  ██      ██   ██
-echo ██        ████   ██████  ███████ █████   ██████ 
-echo ██         ██    ███      ██ ██  ██      █████▄
-echo  ██████    ██    ██      ██   ██ ███████ ██   ██
 ECHO ===============================================
 ECHO Dns resolver
 ECHO BY: Cyphrx
-ECHO Finding the right path is always hard.
 ECHO ===============================================
 Pause 
+IF ERRORLEVEL 1 (SET in=c & echo You shouldnt be here, Maybe next time put a DOMAIN NAME in please...)
+Pause
+echo =======================
+echo       Hidden menu
+echo =======================
+Pause
+SET /p choice=  Go to a fun place? [y/n] 
+IF NOT '%choice%'=='' SET choice=%choice:~0,1%
+IF '%choice%'=='y' GOTO :Funplace
+IF '%choice%'=='Y' GOTO :funplace
+IF '%choice%'=='N' GOTO :start
+IF '%choice%'=='n' GOTO :start
+ECHO "%choice%" is not valid
+ECHO.
+goto :start
  for /f "skip=1 tokens=2 delims=: " %%a in ('nslookup %domainname% ^| find /v "Aliases"') do set my_dns_result=%%a
- cls && echo. && echo. && echo Collecting data && echo.
+ cls && echo. && echo. && echo Collecting data && echo.\
+ color 01
  echo. [####* ]
  for /f "skip=1 tokens=2 delims=: " %%a in ('nslookup %domainname% 8.8.8.8 ^| find /v "Aliases"') do set google_result=%%a
  cls && echo. && echo. && echo Collecting data && echo.
+ color 02
  echo. [#######* ]
  for /f "skip=1 tokens=2 delims=: " %%a in ('nslookup %domainname% 208.67.222.222 ^| find /v "Aliases"') do set OpenDNS_result=%%a
  cls && echo. && echo. && echo Collecting data && echo.
  echo. [##########* ]
+ color 03
  for /f "skip=1 tokens=2 delims=: " %%a in ('nslookup %domainname% 216.146.35.35 ^| find /v "Aliases"') do set DynDNS_result=%%a
  cls && echo. && echo. && echo Collecting data && echo.
  echo. [#############* ]
+ color 04
  for /f "skip=1 tokens=2 delims=: " %%a in ('nslookup %domainname% 198.153.192.50 ^| find /v "Aliases"') do set Norton_DNS_result=%%a
  cls && echo. && echo. && echo Collecting data && echo.
  echo. [################* ]
+ color 05
  for /f "skip=1 tokens=2 delims=: " %%a in ('nslookup %domainname% 8.26.56.26 ^| find /v "Aliases"') do set combo_result=%%a
  cls && echo. && echo. && echo Collecting data && echo.
  echo. [###################* ]
+ color 06
  for /f "skip=1 tokens=2 delims=: " %%a in ('nslookup %domainname% 156.154.70.1 ^| find /v "Aliases"') do set DNS_Advantage_result=%%a
  cls && echo. && echo. && echo Collecting data && echo.
  echo. [######################* ]
+ color 07
  for /f "skip=1 tokens=2 delims=: " %%a in ('nslookup %domainname% 4.2.2.2 ^| find /v "Aliases"') do set Verizon_result=%%a
  cls && echo. && echo. && echo Collecting data && echo.
  echo. [#########################* ]
+ color 08
  for /f "skip=1 tokens=2 delims=: " %%a in ('nslookup %domainname% 209.244.0.3 ^| find /v "Aliases"') do set Level3_result=%%a
  cls && echo. && echo. && echo Collecting data && echo.
  echo. [############################* ]
+ color 09
  for /f "skip=1 tokens=2 delims=: " %%a in ('nslookup %domainname% 81.218.119.11 ^| find /v "Aliases"') do set GreenTeamDNS_result=%%a
  cls && echo. && echo. && echo Collecting data && echo.
  echo. [###############################* ]
+ color 01
  for /f "skip=1 tokens=2 delims=: " %%a in ('nslookup %domainname% 195.46.39.39 ^| find /v "Aliases"') do set SafeDNS_result=%%a
  cls && echo. && echo. && echo Collecting data && echo.
  echo. [##################################* ]
+ color 02
  for /f "skip=1 tokens=2 delims=: " %%a in ('nslookup %domainname% 208.76.50.50 ^| find /v "Aliases"') do set SmartViper_result=%%a
  cls && echo. && echo. && echo Collecting data && echo.
  echo. [#####################################*]
+ color 03
  cls
  echo. && echo.
  echo. Results from various DNS server for Domain %domainname%
@@ -353,3 +319,45 @@ Pause
  echo. && echo. && echo.
  Pause
  goto :start
+ chcp 65001
+title [Networking tools V.03]
+mode 500,500
+ :system
+ cls
+ color 7
+ SET choice=
+SET /p choice=    N for networking information S for system information  [S/N]: 
+IF NOT '%choice%'=='' SET choice=%choice:~0,1%
+IF '%choice%'=='S' GOTO :info
+IF '%choice%'=='s' GOTO :Info
+IF '%choice%'=='n' GOTO :networking
+IF '%choice%'=='N' GOTO :networking
+ECHO "%choice%" is not valid
+ECHO.
+goto :start
+:networking
+cls
+ echo ========================================
+ echo System information will now be displayed.
+ echo ========================================
+ Pause
+ color 2
+ Ipconfig /all
+ Pause
+ color 3
+ echo Test finshed.
+ Pause
+ goto :start
+ :info
+ color 4
+echo ========================================
+echo System information will now be displayed.
+echo ========================================
+Pause
+color 5
+systeminfo
+Pause
+echo Task complete
+:funplace 
+start "" https://superbad.com/
+goto start
